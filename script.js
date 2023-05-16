@@ -20,6 +20,7 @@ inputText.addEventListener('keydown', function (event) {
   let text = event.key;
   if (event.code == 'Enter') {
     event.preventDefault();
+    //тут должны быть проверка и реплэйс с TITLE_H1_REGEXP
     inputText.value = '';
     let newParagraph = outputText.cloneNode();
     divContainer.append(newParagraph);
@@ -35,7 +36,7 @@ inputText.addEventListener('keydown', function (event) {
   if (!isPrintSymbol(text)) text = '';
 
   outputText.innerHTML += text;
-  
+  //тут должны быть проверка и реплэйс с BOLD_REGEXP
   console.log(result);
 })
 
