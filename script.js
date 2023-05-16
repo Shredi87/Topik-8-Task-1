@@ -1,19 +1,24 @@
 const inputText = document.getElementsByClassName('input-text')[0];
 const divContainer = document.getElementsByClassName('container')[0];
 const paragraph = document.getElementsByClassName('output-text');
+
 let outputText = paragraph[0];
-let result = outputText.textContent;
+let result = outputText.innerHTML;
 result = '';
 
-console.log(inputText);
-console.log(divContainer);
-console.log(paragraph);
-console.log(outputText);
+const PRINT_SYMBOL_REGEXP = /\b(\d|\s|\w){1}\b/;
+const TITLE_H1_REGEXP = /^#\s.+$/;
+const BOLD_REGEXP = /\*{2}.+\*{2}/;
+const isTitle = (result) => TITLE_H1_REGEXP.test(result);
+const isBold = (result) => BOLD_REGEXP.test(result);
+
+function isPrintSymbol(symbol) {
+  return PRINT_SYMBOL_REGEXP.test(symbol);
+};
 
 inputText.addEventListener('keydown', function (event) {
   let text = event.key;
-  let code = event.code;
-  if (code == 'Enter') {
+  if (event.code == 'Enter') {
     event.preventDefault();
     let newParagraph = outputText.cloneNode();
     divContainer.append(newParagraph);
@@ -22,17 +27,14 @@ inputText.addEventListener('keydown', function (event) {
     text = '';
   }
 
-  console.log(outputText.value);
-  result += text;
-  console.log(outputText.value);
+  if (event.code == 'Space') {
+    text = ' ';
+  }
+
+  if (!isPrintSymbol(text)) text = '';
+
+  outputText.innerHTML += text;
+  
+  console.log(result);
 })
 
-function isTitle() {
-  if (result[0] == '#') 
-  result = `<h1>${this.result}</h1>`;
-  return result;
-}
-
-function checkKey(params) {
-  
-}
