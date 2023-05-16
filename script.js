@@ -20,6 +20,7 @@ inputText.addEventListener('keydown', function (event) {
   let text = event.key;
   if (event.code == 'Enter') {
     event.preventDefault();
+    inputText.value = '';
     let newParagraph = outputText.cloneNode();
     divContainer.append(newParagraph);
     outputText = paragraph[paragraph.length - 1];
