@@ -6,7 +6,7 @@ let outputText = paragraph[0];
 outputText.innerHTML = '';
 
 const PRINT_SYMBOL_REGEXP = /\b(\d|\s|\w){1}\b/;
-const TITLE_H1_REGEXP = /^#\s.+/;
+const TITLE_H1_REGEXP = /^# .+/;
 const BOLD_REGEXP = /\*{2}.+\*{2}/;
 const isTitle = (result) => TITLE_H1_REGEXP.test(result);
 const isBold = (result) => BOLD_REGEXP.test(result);
@@ -19,7 +19,10 @@ inputText.addEventListener('keydown', function (event) {
   let text = event.key;
   if (event.code == 'Enter') {
     event.preventDefault();
-    //тут должны быть проверка и реплэйс с TITLE_H1_REGEXP
+    if (isTitle(outputText.innerHTML)) {
+      let titleText = outputText.innerHTML;
+      outputText.innerHTML = `<h1>${titleText.slice(2)}</h1>`
+    }
     inputText.value = '';
     let newParagraph = outputText.cloneNode();
     divContainer.append(newParagraph);
@@ -28,14 +31,20 @@ inputText.addEventListener('keydown', function (event) {
     text = '';
   }
  
-  if (event.code == 'Space') {
-    outputText.innerHTML += ' ';
-  }
+  if (event.code == 'Space') outputText.innerHTML += ' ';
+  if (event.key == '#') outputText.innerHTML += '#';
+  if (event.key == '*') outputText.innerHTML += '*';
 
   if (!isPrintSymbol(text)) text = '';
 
   outputText.innerHTML += text;
-  //тут должны быть проверка и реплэйс с BOLD_REGEXP
-  console.log(result);
+  
+  if (isBold(outputText.innerHTML)) {
+    let index = outputText.innerHTML.search(BOLD_REGEXP);
+    let normalText = outputText.innerHTML.slice(0, index);
+    let boldText = outputText.innerHTML.slice(index);
+    console.log(boldText);
+    outputText.innerHTML = `${normalText}<b>${boldText.slice(2, boldText.length - 2)}</b>`
+  }
 })
 
