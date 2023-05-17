@@ -3,11 +3,10 @@ const divContainer = document.getElementsByClassName('container')[0];
 const paragraph = document.getElementsByClassName('output-text');
 
 let outputText = paragraph[0];
-let result = outputText.innerHTML;
-result = '';
+outputText.innerHTML = '';
 
 const PRINT_SYMBOL_REGEXP = /\b(\d|\s|\w){1}\b/;
-const TITLE_H1_REGEXP = /^#\s.+$/;
+const TITLE_H1_REGEXP = /^#\s.+/;
 const BOLD_REGEXP = /\*{2}.+\*{2}/;
 const isTitle = (result) => TITLE_H1_REGEXP.test(result);
 const isBold = (result) => BOLD_REGEXP.test(result);
@@ -28,9 +27,9 @@ inputText.addEventListener('keydown', function (event) {
     result = '';
     text = '';
   }
-
+ 
   if (event.code == 'Space') {
-    text = ' ';
+    outputText.innerHTML += ' ';
   }
 
   if (!isPrintSymbol(text)) text = '';
